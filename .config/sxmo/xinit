@@ -4,7 +4,6 @@ export BROWSER=/usr/bin/firefox
 export EDITOR=/usr/bin/nano
 export TERM=/usr/bin/lxterminal
 
-export SXMO_SUBREDDITS="asmr unixporn wtf"
 export SXMO_RTCWAKEINTERVAL=300
 export SXMO_LOCK_SCREEN_OFF=1
 
