@@ -9,10 +9,10 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net5.0/ppwake.dll",
+            "program": "${workspaceFolder}/home/mo/code/ppwake/bin/Debug/net5.0/ppwake.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/home/mo/code/ppwake",
+            "console": "internalConsole",
             "stopAtEntry": false
         },
         {
