@@ -1,13 +1,12 @@
 using System.IO;
 using System.Text;
 
-namespace PinePhoneLib.Hardware
+namespace PinePhoneLib.Devices
 {
     public class PowerSupply
     {
         public const string PATH = "/sys/class/power_supply/axp20x-usb";
 
-        public string Status => File.ReadAllText($"{PATH}/status").Trim();
         public string Health => File.ReadAllText($"{PATH}/health").Trim();
         public bool Online => File.ReadAllText($"{PATH}/online").Trim() == "1";
         public bool Present => File.ReadAllText($"{PATH}/present").Trim() == "1";

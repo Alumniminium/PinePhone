@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace PinePhoneLib.Hardware
+namespace PinePhoneLib.Devices
 {
     public class SoC
     {
@@ -13,8 +13,8 @@ namespace PinePhoneLib.Hardware
 
         public SoC()
         {
-            CpuCores = new CpuCore[Environment.ProcessorCount];
-            for (int i = 0; i < Environment.ProcessorCount; i++)
+            CpuCores = new CpuCore[4];
+            for (int i = 0; i < 4; i++)
                 CpuCores[i] = new CpuCore(i);
         }
 

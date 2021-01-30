@@ -3,7 +3,7 @@ using System.Diagnostics;
 using CliWrap;
 using CliWrap.Buffered;
 
-namespace PinePhoneLib.Parsers
+namespace PinePhoneLib.Helpers
 {
     public class Shell
     {

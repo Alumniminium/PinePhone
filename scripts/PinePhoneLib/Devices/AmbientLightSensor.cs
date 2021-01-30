@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text;
 
-namespace PinePhoneLib.Hardware
+namespace PinePhoneLib.Devices
 {
     public class AmbientLightSensor
     {
