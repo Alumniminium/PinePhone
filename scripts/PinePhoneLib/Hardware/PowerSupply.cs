@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using PinePhoneLib.Parsers;
 
 namespace PinePhoneLib.Hardware
@@ -16,23 +17,14 @@ namespace PinePhoneLib.Hardware
         public float DCP_INPUT_CURRENT_LIMIT => int.Parse(GetValueOrDefault("POWER_SUPPLY_USB_DCP_INPUT_CURRENT_LIMIT","0"))/1000000f;
         public string Protocol => GetValueOrDefault("POWER_SUPPLY_USB_TYPE").Split('[')[1].Split(']')[0];
 
-        public PowerSupply(string path = "/sys/class/power_supply/axp20x-usb/uevent")
-        {
-            Path = path;
-        }
+        public PowerSupply(string path = "/sys/class/power_supply/axp20x-usb/uevent") => Path = path;
 
         public override string ToString()
         {
-            return $"{nameof(Name)}: {Name}" + Environment.NewLine +
-                   $"{nameof(Type)}: {Type}" + Environment.NewLine +
-                   $"{nameof(Health)}: {Health}" + Environment.NewLine +
-                   $"{nameof(ChargerPresent)}: {ChargerPresent}%" + Environment.NewLine +
-                   $"{nameof(Online)}: {Online}" + Environment.NewLine +
-                   $"{nameof(BC_ENABLED)}: {BC_ENABLED}" + Environment.NewLine +
-                   $"{nameof(MinVoltage)}: {MinVoltage}V" + Environment.NewLine +
-                   $"{nameof(InputCurrentLimit)}: {InputCurrentLimit}A"+ Environment.NewLine +
-                   $"{nameof(DCP_INPUT_CURRENT_LIMIT)}: {DCP_INPUT_CURRENT_LIMIT}A" + Environment.NewLine +
-                   $"{nameof(Protocol)}: {Protocol}";
+            var sb = new StringBuilder();
+            foreach (var p in GetType().GetProperties())
+                sb.AppendLine($"{p.Name}: {p.GetValue(this, null)}");
+            return sb.ToString();
         }
     }
 }

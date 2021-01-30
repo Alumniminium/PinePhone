@@ -6,12 +6,17 @@ namespace PinePhoneLib
 {
     class PinePhone
     {
-        public static Battery Battery = new Battery();
-        public static PowerSupply PowerSupply = new PowerSupply();
-        public static WiFi WiFi = new WiFi();
-        public static Display Display = new Display();
-        public static SoC SoC = new SoC();
-        public static Bluetooth Bluetooth = new Bluetooth();
+        public static SoC SoC = new();
+        public static WiFi WiFi = new();
+        public static Battery Battery = new();
+        public static Display Display = new();
+        public static Bluetooth Bluetooth = new();
+        public static PowerSupply PowerSupply = new();
+        public static Magnetometer Magnetometer = new();
+        public static Accelerometer Accelerometer = new();
+        public static ProximitySensor ProximitySensor = new();
+        public static AmbientLightSensor AmbientLightSensor = new();
+        
 
         static void Main(string[] args)
         {
@@ -19,7 +24,7 @@ namespace PinePhoneLib
             PowerSupply.UpdateCache();
 
             Display.Brightness = 500;
-            Display.PowerOn = true;
+            Display.PowerOn = false;
 
             Console.WriteLine("Battery: ");
             Console.WriteLine(Battery.ToString());
@@ -35,26 +40,28 @@ namespace PinePhoneLib
             Console.WriteLine();
             Console.WriteLine("SoC:");
             Console.WriteLine(SoC.ToString());
+            foreach(var cpu in SoC.CpuCores)
+                Console.WriteLine(cpu.ToString());
             Console.WriteLine();
             Console.WriteLine("Bluetooth:");
             Console.WriteLine(Bluetooth.ToString());
             Console.WriteLine();
 
-            //bool up = true;
-            //while (true)
-            //{
-            //    if (Display.Brightness == 1000)
-            //        up = false;
-            //    if (Display.Brightness == 50)
-            //        up = true;
-//
-            //    if (up)
-            //        Display.Brightness++;
-            //    else
-            //        Display.Brightness--;
-//
-            //    Thread.Sleep(16);
-            //}
+            Console.WriteLine("Magnetometer:");
+            Console.WriteLine(Magnetometer.ToString());
+            Console.WriteLine();
+            Console.WriteLine("Proximity Sensor:");
+            Console.WriteLine(ProximitySensor.ToString());
+            Console.WriteLine();
+            Console.WriteLine("Ambient Light Sensor:");
+            Console.WriteLine(AmbientLightSensor.ToString());
+            Console.WriteLine();
+            Console.WriteLine("Accelerometer:");
+            Console.WriteLine(Accelerometer.ToString());
+            Console.WriteLine();
+
+            //while(true)
+            //    Console.WriteLine(ProximitySensor.ToString());
         }
 
         public bool IsCharging() => PowerSupply.Online;

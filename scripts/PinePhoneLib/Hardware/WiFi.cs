@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using PinePhoneLib.Parsers;
 
 namespace PinePhoneLib.Hardware
@@ -12,6 +13,11 @@ namespace PinePhoneLib.Hardware
             set => File.WriteAllText("/sys/class/rfkill/rfkill0/soft", $"{(value ? "0" : "1")}");
             //get => Shell.GetValue("nmcli", "radio wifi") == "enabled";
             //set => Shell.GetValue("nmcli", $"radio wifi {(value ? "on" :"off")}");
+        }
+        public bool Enabled_NMCLI
+        {
+            get => Shell.GetValue("nmcli", "radio wifi") == "enabled";
+            set => Shell.GetValue("nmcli", $"radio wifi {(value ? "on" :"off")}");
         }
         public bool IsConnected_NMCLI => Shell.GetValue("nmcli", "connection show --active").Contains("wlan0");
         public bool IsConnected_IP => Shell.GetValue("ip", "a show dev wlan0").Contains("inet");
@@ -77,18 +83,10 @@ namespace PinePhoneLib.Hardware
 
         public override string ToString()
         {
-            return $"{nameof(Enabled)}: {Enabled}" + Environment.NewLine +
-                   $"{nameof(IsConnected_NMCLI)}: {IsConnected_NMCLI}" + Environment.NewLine +
-                   $"{nameof(IsConnected_IP)}: {IsConnected_IP}, " + Environment.NewLine +
-                   $"{nameof(IsConnected_IFCONFIG)}: {IsConnected_IFCONFIG}" + Environment.NewLine +
-                   $"{nameof(GetMac)}: {GetMac()}" + Environment.NewLine +
-                   $"{nameof(GetSSID)}: {GetSSID()}" + Environment.NewLine +
-                   $"{nameof(GetSignalLevel)}: {GetSignalLevel()}" + Environment.NewLine +
-                   $"{nameof(GetNoiseLevel)}: {GetNoiseLevel()}" + Environment.NewLine +
-                   $"{nameof(GetLinkQuality)}: {GetLinkQuality()}" + Environment.NewLine +
-                   $"{nameof(GetLocalIP)}: {GetLocalIP()}" + Environment.NewLine +
-                   //$"{nameof(GetLinkQuality)}: {GetLinkQuality()}" + Environment.NewLine +
-                   $"";
+            var sb = new StringBuilder();
+            foreach (var p in GetType().GetProperties())
+                sb.AppendLine($"{p.Name}: {p.GetValue(this, null)}");
+            return sb.ToString();
         }
     }
 }

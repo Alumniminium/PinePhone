@@ -1,23 +1,29 @@
 using System;
 using System.IO;
+using System.Text;
 
 namespace PinePhoneLib.Hardware
 {
     public class SoC
     {
+        public float GpuTemperature => int.Parse(File.ReadAllText("/sys/class/hwmon/hwmon3/temp1_input")) / 1000f;
+        public CpuCore[] CpuCores;
         public float CpuTemperature => int.Parse(File.ReadAllText("/sys/class/hwmon/hwmon2/temp1_input")) / 1000f;
         public float CpuCriticalTemperature => int.Parse(File.ReadAllText("/sys/class/hwmon/hwmon2/temp1_crit")) / 1000f;
-        public float GpuTemperature => int.Parse(File.ReadAllText("/sys/class/hwmon/hwmon3/temp1_input")) / 1000f;
-        public float GpuTemperature2 => int.Parse(File.ReadAllText("/sys/class/hwmon/hwmon4/temp1_input")) / 1000f;
+
+        public SoC()
+        {
+            CpuCores = new CpuCore[Environment.ProcessorCount];
+            for (int i = 0; i < Environment.ProcessorCount; i++)
+                CpuCores[i] = new CpuCore(i);
+        }
 
         public override string ToString()
         {
-            return $"{nameof(CpuTemperature)}: {CpuTemperature}" + Environment.NewLine +
-                   $"{nameof(CpuCriticalTemperature)}: {CpuCriticalTemperature}" + Environment.NewLine +
-                   $"{nameof(GpuTemperature)}: {GpuTemperature}, " + Environment.NewLine +
-                   $"{nameof(GpuTemperature2)}: {GpuTemperature2}" + Environment.NewLine +
-                   //$"{nameof(GetLinkQuality)}: {GetLinkQuality()}" + Environment.NewLine +
-                   $"";
+            var sb = new StringBuilder();
+            foreach (var p in GetType().GetProperties())
+                sb.AppendLine($"{p.Name}: {p.GetValue(this, null)}");
+            return sb.ToString();
         }
     }
 }

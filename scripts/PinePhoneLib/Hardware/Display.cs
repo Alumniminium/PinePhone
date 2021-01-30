@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 
 namespace PinePhoneLib.Hardware
 {
@@ -10,20 +11,20 @@ namespace PinePhoneLib.Hardware
         public bool PowerOn
         {
             get => File.ReadAllText("/sys/class/backlight/backlight/bl_power").Trim() == "0";
-            set => File.WriteAllText("/sys/class/backlight/backlight/bl_power",value ? "0" : "1" );
+            set => File.WriteAllText("/sys/class/backlight/backlight/bl_power", value ? "0" : "1");
         }
         public int Brightness
         {
             get => int.Parse(File.ReadAllText("/sys/class/backlight/backlight/brightness"));
-            set => File.WriteAllText("/sys/class/backlight/backlight/brightness",value.ToString());
+            set => File.WriteAllText("/sys/class/backlight/backlight/brightness", value.ToString());
         }
 
         public override string ToString()
         {
-            return $"{nameof(Brightness)}: {Brightness}" + Environment.NewLine +
-                   $"{nameof(ActualBrightness)}: {ActualBrightness}" + Environment.NewLine +
-                   $"{nameof(MaxBrightness)}: {MaxBrightness}" + Environment.NewLine +
-                   $"{nameof(PowerOn)}: {PowerOn}"; 
+            var sb = new StringBuilder();
+            foreach (var p in GetType().GetProperties())
+                sb.AppendLine($"{p.Name}: {p.GetValue(this, null)}");
+            return sb.ToString();
         }
     }
 }

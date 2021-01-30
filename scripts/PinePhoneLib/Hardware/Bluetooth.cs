@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 
 namespace PinePhoneLib.Hardware
 {
@@ -13,9 +14,10 @@ namespace PinePhoneLib.Hardware
         
         public override string ToString()
         {
-            return $"{nameof(Enabled)}: {Enabled}" + Environment.NewLine +
-                   //$"{nameof(GetLinkQuality)}: {GetLinkQuality()}" + Environment.NewLine +
-                   $"";
+            var sb = new StringBuilder();
+            foreach (var p in GetType().GetProperties())
+                sb.AppendLine($"{p.Name}: {p.GetValue(this, null)}");
+            return sb.ToString();
         }
     }
 }
