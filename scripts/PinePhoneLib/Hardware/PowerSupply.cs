@@ -1,24 +1,25 @@
-using System;
+using System.IO;
 using System.Text;
-using PinePhoneLib.Parsers;
 
 namespace PinePhoneLib.Hardware
 {
-    public class PowerSupply: IniFileSource
+    public class PowerSupply
     {
-        public string Name => GetValueOrDefault("POWER_SUPPLY_NAME");
-        public string Type => GetValueOrDefault("POWER_SUPPLY_TYPE");
-        public string Health => GetValueOrDefault("POWER_SUPPLY_HEALTH");
-        public bool ChargerPresent => GetValueOrDefault("POWER_SUPPLY_PRESENT") == "1";
-        public bool Online => GetValueOrDefault("POWER_SUPPLY_ONLINE") == "1";
-        public bool BC_ENABLED => GetValueOrDefault("POWER_SUPPLY_USB_BC_ENABLED") == "1";
-        public float MinVoltage => int.Parse(GetValueOrDefault("POWER_SUPPLY_VOLTAGE_MIN","0"))/1000000f;
-        public float InputCurrentLimit => int.Parse(GetValueOrDefault("POWER_SUPPLY_INPUT_CURRENT_LIMIT","0"))/1000000f;
-        public float DCP_INPUT_CURRENT_LIMIT => int.Parse(GetValueOrDefault("POWER_SUPPLY_USB_DCP_INPUT_CURRENT_LIMIT","0"))/1000000f;
-        public string Protocol => GetValueOrDefault("POWER_SUPPLY_USB_TYPE").Split('[')[1].Split(']')[0];
+        public const string PATH = "/sys/class/power_supply/axp20x-usb";
 
-        public PowerSupply(string path = "/sys/class/power_supply/axp20x-usb/uevent") => Path = path;
-
+        public string Name => File.ReadAllText($"{PATH}/name").Trim();
+        public string Status => File.ReadAllText($"{PATH}/status").Trim();
+        public string Health => File.ReadAllText($"{PATH}/health").Trim();
+        public bool Online => File.ReadAllText($"{PATH}/online").Trim() == "1";
+        public bool Present => File.ReadAllText($"{PATH}/present").Trim() == "1";
+        public bool BCEnabled => File.ReadAllText($"{PATH}/usb_bc_enabled").Trim() == "1";
+        public string Type => File.ReadAllText($"{PATH}/type").Trim();
+        public float MinVoltage => int.Parse(File.ReadAllText($"{PATH}/voltage_min")) / 1000000f;
+        public float InputCurrentLimit => int.Parse(File.ReadAllText($"{PATH}/input_current_limit")) / 1000f;
+        public float InputCurrentLimitDCP => int.Parse(File.ReadAllText($"{PATH}/usb_dcp_input_current_limit")) / 1000f;
+        public string Protocol => File.ReadAllText($"{PATH}/usb_type").Split('[')[1].Split(']')[0];
+        
+        
         public override string ToString()
         {
             var sb = new StringBuilder();
