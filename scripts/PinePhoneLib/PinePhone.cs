@@ -20,11 +20,8 @@ namespace PinePhoneLib
 
         static void Main(string[] args)
         {
-            Battery.UpdateCache();
-            PowerSupply.UpdateCache();
-
             Display.Brightness = 500;
-            Display.PowerOn = false;
+            //Display.PowerOn = true;
 
             Console.WriteLine("Battery: ");
             Console.WriteLine(Battery.ToString());

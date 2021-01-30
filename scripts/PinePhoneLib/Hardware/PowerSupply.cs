@@ -7,7 +7,6 @@ namespace PinePhoneLib.Hardware
     {
         public const string PATH = "/sys/class/power_supply/axp20x-usb";
 
-        public string Name => File.ReadAllText($"{PATH}/name").Trim();
         public string Status => File.ReadAllText($"{PATH}/status").Trim();
         public string Health => File.ReadAllText($"{PATH}/health").Trim();
         public bool Online => File.ReadAllText($"{PATH}/online").Trim() == "1";
