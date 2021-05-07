@@ -4,6 +4,7 @@
 # You can use it to play a ring tone
 
 # Start the mpv ring until another hook kill it
+audioctl.sh s 100
 mpv --quiet --no-video --loop /usr/share/sxmo/ring.ogg &
 MPVID=$!
 echo "$MPVID" > "$XDG_RUNTIME_DIR/sxmo.ring.pid"
