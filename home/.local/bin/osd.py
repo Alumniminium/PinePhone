@@ -3,7 +3,7 @@ from pathlib import Path
 
 INPUT_FILE_PATH=str(Path.home())+"/osd"
 MAX_LINE_LENGTH=64
-OUTPUT_LINE_COUNT=6
+OUTPUT_LINE_COUNT=8
 
 def getlines():
     f = open(INPUT_FILE_PATH, "r")

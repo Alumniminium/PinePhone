@@ -8,4 +8,4 @@
 #TEXT="$2"
 
 mpv --quiet --no-video /usr/share/sxmo/notify.ogg
-echo "[$1] $2" >> ~/osd
+echo " [$1] $2" >> ~/osd
