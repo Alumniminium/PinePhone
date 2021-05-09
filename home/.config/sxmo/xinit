@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 # Please modify this file to your liking
-
 # enter SIM PIN
 sleep 20 && mmcli -i 0 --pin 1649 && sleep 2 && sxmo_modemmonitortoggle.sh on &
 command -v chromium && export BROWSER=chromium
@@ -18,12 +17,14 @@ export DMENU_WRAP_AROUND=1
 #export KEYBOARD_ARGS="-o | clickclack -V"
 export EDITOR=/usr/bin/micro
 
+echo "schedutil" | sudo tee /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+
 xset dpms
 xset s 60 60
 
-dotnet /home/alarm/PinePhone/PinePhoneCore/samples/ppjackd/bin/Debug/net5.0/ppjackd.dll > ~/ppjackd.log &
+(/home/alarm/PinePhone/PinePhoneCore/samples/ppjackd/bin/Release/net5.0/linux-arm64/publish/ppjackd > ~/ppjackd.log) &
 #dotnet /home/alarm/PinePhone/PinePhoneCore/samples/ppmusicsyncd/bin/Debug/net5.0/ppmusicsyncd.dll > ~/ppmusicsyncd.log &
-dotnet /home/alarm/PinePhone/PinePhoneCore/src/bin/Debug/net5.0/PinePhoneCore.dll > ~/PinePhoneCore.log &
+(sudo /home/alarm/PinePhone/PinePhoneCore/src/bin/Release/net5.0/linux-arm64/publish/PinePhoneCore > ~/ppcored.log) &
 
 conky -d -c ~/.config/sxmo/conky.conf
 feh --bg-fill ~/.bg
