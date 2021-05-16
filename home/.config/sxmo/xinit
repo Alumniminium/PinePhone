@@ -24,7 +24,8 @@ xset s 60 60
 
 (/home/alarm/PinePhone/PinePhoneCore/samples/ppjackd/bin/Release/net5.0/linux-arm64/publish/ppjackd > ~/ppjackd.log) &
 #dotnet /home/alarm/PinePhone/PinePhoneCore/samples/ppmusicsyncd/bin/Debug/net5.0/ppmusicsyncd.dll > ~/ppmusicsyncd.log &
-(sudo /home/alarm/PinePhone/PinePhoneCore/src/bin/Release/net5.0/linux-arm64/publish/PinePhoneCore > ~/ppcored.log) &
+(sudo /home/alarm/PinePhone/PinePhoneCore/samples/pplightd/bin/Release/net5.0/linux-arm64/publish/pplightd > ~/pplightd.log) &
+(sudo /home/alarm/PinePhone/PinePhoneCore/samples/ppproximityd/bin/Release/net5.0/linux-arm64/publish/ppproximityd > ~/ppproximityd.log) &
 
 conky -d -c ~/.config/sxmo/conky.conf
 feh --bg-fill ~/.bg
